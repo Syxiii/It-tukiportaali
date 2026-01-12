@@ -31,8 +31,10 @@ export default function App() {
     <div className="app">
       <div className="sidebar">
         <div className="logo">IT Support</div>
-        <p className="user">{currentUser.username}</p>
-        {currentUser.isAdmin && <span className="admin-badge">Admin</span>}
+        <div className="user-header">
+          <p className="user">{currentUser.username}</p>
+          {currentUser.isAdmin && <span className="admin-badge">Admin</span>}
+        </div>
         <nav>
           <button onClick={() => setPage("welcome")}>Etusivu</button>
           {currentUser.isAdmin && <button onClick={() => setPage("dashboard")}>Dashboard</button>}
