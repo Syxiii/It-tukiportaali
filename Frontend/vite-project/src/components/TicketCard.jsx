@@ -1,10 +1,14 @@
 function TicketCard({ ticket }) {
-  return (
-    <div style={{ border: "1px solid #ccc", margin: "5px", padding: "5px" }}>
-      <strong>{ticket.title}</strong>
-      <div>Tila: {ticket.status}</div>
-    </div>
-  );
+    const statusClass = ticket.status === "Avoin" ? "badge-avoim"
+                      : ticket.status === "Käsittelyssä" ? "badge-kasittelyssa"
+                      : "badge-ratkaistu";
+
+    return (
+        <div className="ticket-card">
+            <span>{ticket.title}</span>
+            <span className={`badge ${statusClass}`}>{ticket.status}</span>
+        </div>
+    );
 }
 
 export default TicketCard;

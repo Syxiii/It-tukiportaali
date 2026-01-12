@@ -1,0 +1,116 @@
+/* Yleiset tyylit */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+/* Lomakkeet */
+form {
+    background-color: white;
+    padding: 20px;
+    margin: 40px auto;
+    border-radius: 8px;
+    max-width: 400px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #ffcc00;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Tikettikortit */
+.ticket-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s;
+}
+
+.ticket-card:hover {
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Status badge */
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.badge-avoim { background-color: #f1c40f; } /* keltainen */
+.badge-kasittelyssa { background-color: #e67e22; } /* oranssi */
+.badge-ratkaistu { background-color: #2ecc71; } /* vihreä */
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Responsiivisuus */
+@media screen and (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    nav a {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+    form {
+        width: 90%;
+        margin: 20px auto;
+    }
+}
