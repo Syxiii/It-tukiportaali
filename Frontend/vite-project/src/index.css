@@ -454,3 +454,180 @@ nav button:hover {
   background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
 }
 
+/* Admin Badge */
+.admin-badge {
+  display: inline-block;
+  background: #dc2626;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* Login Page Styles */
+.link-button {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  padding: 0;
+}
+
+.link-button:hover {
+  color: #1d4ed8;
+}
+
+/* User Management */
+.user-management {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.user-management h2 {
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+.add-user-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.add-user-btn:hover {
+  background: #1d4ed8;
+}
+
+.user-form {
+  background: #f0f9ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid #bfdbfe;
+}
+
+.user-form h3 {
+  margin-top: 0;
+  color: #0f172a;
+}
+
+.user-form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #cbd5f1;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.user-form button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.user-form button:hover {
+  background: #1d4ed8;
+}
+
+.users-list {
+  display: grid;
+  gap: 15px;
+}
+
+.user-item {
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.username {
+  font-weight: 600;
+  color: #0f172a;
+  min-width: 150px;
+}
+
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.role-badge.admin {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.role-badge.user {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.user-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-toggle,
+.delete-btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-toggle.add {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.admin-toggle.add:hover {
+  background: #bfdbfe;
+}
+
+.admin-toggle.remove {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.admin-toggle.remove:hover {
+  background: #fecaca;
+}
+
+.delete-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.delete-btn:hover {
+  background: #e5e5e5;
+  color: #333;
+}
+
