@@ -18,6 +18,8 @@ export default function App() {
   useEffect(() => {
     if (currentUser && currentUser.username === "rasmus") {
       setPage("welcome");
+    } else if (currentUser && currentUser.isAdmin) {
+      setPage("dashboard");
     }
   }, [currentUser]);
 
