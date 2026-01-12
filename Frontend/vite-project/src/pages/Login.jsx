@@ -52,6 +52,16 @@ export default function Login({ onLogin, users, setUsers }) {
     setIsLoginMode(true);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      if (isLoginMode) {
+        handleLogin();
+      } else {
+        handleRegister();
+      }
+    }
+  };
+
   return (
     <div className="login-page">
       <div className="login-box">
@@ -64,12 +74,14 @@ export default function Login({ onLogin, users, setUsers }) {
               placeholder="Käyttäjätunnus"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <input
               type="password"
               placeholder="Salasana"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <button onClick={handleLogin}>Kirjaudu</button>
             <p>
@@ -89,18 +101,21 @@ export default function Login({ onLogin, users, setUsers }) {
               placeholder="Käyttäjätunnus"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <input
               type="password"
               placeholder="Salasana"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <input
               type="password"
               placeholder="Vahvista salasana"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <button onClick={handleRegister}>Luo käyttäjä</button>
             <p>

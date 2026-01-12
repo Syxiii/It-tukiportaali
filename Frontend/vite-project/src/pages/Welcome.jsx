@@ -3,7 +3,7 @@ export default function Welcome({ currentUser }) {
     <div className="welcome-page">
       <div className="welcome-hero">
         <h1>Tervetuloa IT-tuen sivulle!</h1>
-        <p className="welcome-subtitle">Hei {currentUser}, olemme täällä auttamaan sinua</p>
+        <p className="welcome-subtitle">Hei {currentUser}, olemme täällä valmiina auttamaan sinua</p>
       </div>
 
       <div className="welcome-content">
