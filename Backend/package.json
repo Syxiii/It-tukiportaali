@@ -8,13 +8,20 @@
     "dev": "nodemon app.js"
   },
   "dependencies": {
+    "@prisma/client": "^7.2.0",
+    "argon2": "^0.44.0",
+    "cors": "^2.8.5",
     "express": "^5.2.1",
-    "cors": "^2.8.5"
+    "prisma": "^7.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
   },
-  "keywords": ["ticket", "support", "api"],
+  "keywords": [
+    "ticket",
+    "support",
+    "api"
+  ],
   "author": "",
   "license": "ISC"
 }
