@@ -81,6 +81,7 @@ export async function register(req, res) {
     return res.status(500).json({ message: "Palvelinvirhe" });
   }
 }
+
 /**
  * POST /api/auth/logout
  * Handles logout (optional for JWT)
