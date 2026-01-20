@@ -95,8 +95,8 @@ export default function Login({ onLogin }) {
             <h2>Kirjaudu sisään</h2>
             <input
               placeholder="Sähköposti"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               onKeyPress={handleKeyPress}
             />
             <input
@@ -122,7 +122,7 @@ export default function Login({ onLogin }) {
             <h2>Luo uusi käyttäjä</h2>
             <input
               placeholder="Sähköposti"
-              value={name}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyPress={handleKeyPress}
             />
