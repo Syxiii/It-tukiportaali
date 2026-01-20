@@ -1,13 +1,35 @@
+import { useEffect, useState } from "react";
 import TicketCard from "../components/TicketCard";
 import api from "../pages/api";
 
-function MyTickets({ tickets, currentUser }) {
-  const myTickets = tickets.filter(t => t.user === currentUser);
+export default function MyTickets() {
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch my tickets on component mount
+  useEffect(() => {
+    const fetchMyTickets = async () => {
+      try {
+        const res = await api.get("/tickets/my"); 
+        setTickets(res.data);
+      } catch (error) {
+        alert(error.response?.data?.message || "Tikettien haku epäonnistui");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMyTickets();
+  }, []);
+
+  if (loading) {
+    return <div className="container">Ladataan tikettejä...</div>;
+  }
 
   return (
     <div className="container">
       <h2>Omat tiketit</h2>
-      {myTickets.length === 0 ? (
+      {tickets.length === 0 ? (
         <div className="empty-state">
           <div className="empty-icon">📋</div>
           <p>Sinulla ei ole vielä luotuja tikettejä</p>
@@ -15,7 +37,7 @@ function MyTickets({ tickets, currentUser }) {
         </div>
       ) : (
         <div className="tickets-list">
-          {myTickets.map(ticket => (
+          {tickets.map(ticket => (
             <TicketCard key={ticket.id} ticket={ticket} />
           ))}
         </div>
@@ -23,5 +45,3 @@ function MyTickets({ tickets, currentUser }) {
     </div>
   );
 }
-
-export default MyTickets;
