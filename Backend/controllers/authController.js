@@ -14,7 +14,6 @@ export async function login(req, res) {
       return res.status(400).json({ message: "Email ja salasana vaaditaan" });
     }
 
-    // 1️⃣ Fetch user from DB
     const user = await prisma.user.findUnique({
       where: { email }
     });
@@ -23,20 +22,18 @@ export async function login(req, res) {
       return res.status(401).json({ message: "Väärät tunnistetiedot" });
     }
 
-    // 2️⃣ Verify password
     const valid = await verifyPassword(user.passwordHash, password);
     if (!valid) {
       return res.status(401).json({ message: "Väärät tunnistetiedot" });
     }
 
-    // 3️⃣ Generate JWT (replace fake token)
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       process.env.JWT_SECRET || "dev-secret",
       { expiresIn: "1h" }
     );
 
-    // 4️⃣ Send response
+
     return res.status(200).json({
       token,
       user: {
@@ -79,6 +76,48 @@ export async function register(req, res) {
   } catch (err) {
     console.error("Registration error:", err);
     return res.status(500).json({ message: "Palvelinvirhe" });
+  }
+}
+
+export async function getUsers(req, res) {
+    try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true
+      }});
+
+    res.status(200).json(users);
+
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ message: "Palvelinvirhe" });
+  }
+}
+
+export async function deleteUser(req, res) {
+  try {
+    const userId = Number(req.params.id);
+
+    if (!userId) {
+      return res.status(400).json({ message: "Virheellinen käyttäjä ID" });
+    }
+
+    await prisma.user.delete({
+      where: { id: userId }
+    });
+
+    res.status(200).json({ message: "Käyttäjä poistettu" });
+  } catch (err) {
+    console.error("Error deleting user:", err);
+
+    if (err.code === "P2025") {
+      return res.status(404).json({ message: "Käyttäjää ei löytynyt" });
+    }
+
+    res.status(500).json({ message: "Palvelinvirhe" });
   }
 }
 

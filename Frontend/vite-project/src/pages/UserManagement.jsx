@@ -1,48 +1,59 @@
 import { useState } from "react";
 import api from "../pages/api";
 
-export default function UserManagement({ users, setUsers }) {
+import { useEffect, useState } from "react";
+
+export default function UserManagement() {
+  const [users, setUsers] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [newUsername, setNewUsername] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const toggleAdminStatus = (userId) => {
-    setUsers(
-      users.map((user) =>
-        user.id === userId ? { ...user, isAdmin: !user.isAdmin } : user
-      )
-    );
-  };
+  useEffect(() => {
+    fetchUsers();
+  }, [])
 
-  const deleteUser = (userId) => {
-    if (confirm("Oletko varma että haluat poistaa käyttäjän?")) {
-      setUsers(users.filter((user) => user.id !== userId));
+    const fetchUsers = async () => {
+    try {
+      const res = await api.get("/auth/getusers");
+      setUsers(res.data);
+    } catch {
+      alert("Käyttäjien haku epäonnistui");
     }
   };
 
-  const addNewUser = () => {
-    if (!newUsername || !newPassword) {
+  // tee myöhemmin const toggleAdminStatus = async (user) =>
+
+  const deleteUser = async (id) => {
+
+      try {
+      await api.delete(`auth/deleteusers/${id}`);
+      fetchUsers();
+    } catch {
+      alert("Käyttäjän poisto epäonnistui");
+    }
+  };
+
+  const addNewUser = async () => {
+    if (!name || !email || !password) {
       alert("Täytä kaikki kentät");
       return;
     }
 
-    if (users.some((user) => user.username === newUsername)) {
-      alert("Käyttäjä on jo olemassa");
-      return;
+    try {
+      await api.post("auth/register", { name, email, password });
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setShowForm(false);
+      fetchUsers();
+      alert("Käyttäjä luotu!");
+
+    } catch (error) {
+      alert(error.response?.data?.message || "Käyttäjän luonti epäonnistui");
     }
-
-    const newUser = {
-      id: Math.max(...users.map((u) => u.id), 0) + 1,
-      username: newUsername,
-      password: newPassword,
-      isAdmin: false,
-    };
-
-    setUsers([...users, newUser]);
-    setNewUsername("");
-    setNewPassword("");
-    setShowForm(false);
-    alert("Käyttäjä luotu!");
   };
 
   return (
@@ -59,13 +70,19 @@ export default function UserManagement({ users, setUsers }) {
           <input
             placeholder="Käyttäjätunnus"
             value={newUsername}
-            onChange={(e) => setNewUsername(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
           <input
+            placeholder="Sähköposti"
+            value={newEmail}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+          
             type="password"
             placeholder="Salasana"
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button onClick={addNewUser}>Luo käyttäjä</button>
         </div>
