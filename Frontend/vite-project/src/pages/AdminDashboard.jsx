@@ -1,5 +1,5 @@
 import TicketCard from "../components/TicketCard";
-import api from "../api/api";
+import api from "../pages/api";
 
 export default function AdminDashboard({ tickets, setTickets }) {
   const changeStatus = (id, newStatus) => {

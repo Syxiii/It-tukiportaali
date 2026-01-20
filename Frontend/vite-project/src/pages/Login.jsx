@@ -1,29 +1,47 @@
 import { useState } from "react";
 import initialUsers from "../data/users";
-import api from "../api/api";
+import api from "../pages/api";
 
-export default function Login({ onLogin, users, setUsers }) {
+export default function Login({ onLogin }) {
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleLogin = () => {
-    if (!name || !password) {
+  const handleLogin = async () => {
+    if (!email || !password) {
       alert("Täytä kaikki kentät");
       return;
     }
 
-    const user = users.find((u) => u.username === name && u.password === password);
-    if (user) {
-      onLogin(user);
-    } else {
-      alert("Väärä käyttäjätunnus tai salasana");
-    }
-  };
+    try {
+    const response = await api.post("/auth/login", {
+      email,
+      password
+    });
 
-  const handleRegister = () => {
-    if (!name || !password || !confirmPassword) {
+    const {token, user} = response.data;
+    localStorage.setItem("token", token);
+
+    onLogin(user);
+
+
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data.message || "Kirjautuminen epäonnistui");
+    } else {
+      alert("Palvelin ei vastaa");
+    }
+  }
+
+  setEmail("");
+  setPassword("");
+
+};
+
+  const handleRegister = async () => {
+    if (!email || !name || !password || !confirmPassword) {
       alert("Täytä kaikki kentät");
       return;
     }
@@ -32,25 +50,29 @@ export default function Login({ onLogin, users, setUsers }) {
       alert("Salasanat eivät täsmää");
       return;
     }
+    
+    try {
+    const response = await api.post("/auth/register", {
+      email,
+      name,
+      password
+    });
 
-    if (users.some((u) => u.username === name)) {
-      alert("Käyttäjä on jo olemassa");
-      return;
-    }
-
-    const newUser = {
-      id: Math.max(...users.map((u) => u.id), 0) + 1,
-      username: name,
-      password: password,
-      isAdmin: false,
-    };
-
-    setUsers([...users, newUser]);
     alert("Käyttäjä luotu! Kirjaudu sisään.");
+
     setName("");
+    setEmail("")
     setPassword("");
     setConfirmPassword("");
-    setIsLoginMode(true);
+    setIsLoginMode(false);
+
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data.message || "Kirjautuminen epäonnistui");
+    } else {
+      alert("Palvelin ei vastaa");
+    }
+  }
   };
 
   const handleKeyPress = (e) => {
@@ -72,7 +94,7 @@ export default function Login({ onLogin, users, setUsers }) {
           <>
             <h2>Kirjaudu sisään</h2>
             <input
-              placeholder="Käyttäjätunnus"
+              placeholder="Sähköposti"
               value={name}
               onChange={(e) => setName(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -99,7 +121,13 @@ export default function Login({ onLogin, users, setUsers }) {
           <>
             <h2>Luo uusi käyttäjä</h2>
             <input
-              placeholder="Käyttäjätunnus"
+              placeholder="Sähköposti"
+              value={name}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
+            <input
+              placeholder="Nimi"
               value={name}
               onChange={(e) => setName(e.target.value)}
               onKeyPress={handleKeyPress}

@@ -1,5 +1,5 @@
 import TicketCard from "../components/TicketCard";
-import api from "../api/api";
+import api from "../pages/api";
 
 function MyTickets({ tickets, currentUser }) {
   const myTickets = tickets.filter(t => t.user === currentUser);

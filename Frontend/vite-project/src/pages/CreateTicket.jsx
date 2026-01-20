@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/api";
+import api from "../pages/api";
 
 export default function CreateTicket({ tickets, setTickets, user }) {
   const [title, setTitle] = useState("");

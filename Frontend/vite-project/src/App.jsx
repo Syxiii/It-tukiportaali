@@ -8,7 +8,7 @@ import Welcome from "./pages/Welcome";
 import UserManagement from "./pages/UserManagement";
 import mockTickets from "./data/mockTickets";
 import initialUsers from "./data/users";
-import api from "../api/api";
+import api from "./pages/api";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
