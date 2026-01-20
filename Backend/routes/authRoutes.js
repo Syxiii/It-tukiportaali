@@ -16,6 +16,6 @@ router.get("/getusers", authenticate, requireAdmin, getUsers);
 
 router.post("/deleteuser", authenticate, requireAdmin, deleteUser);
 
-router.put("/toggleadmin", authenticate, toggle)
+router.put("/toggleadmin", authenticate, requireAdmin, toggle)
 
 export default router;
