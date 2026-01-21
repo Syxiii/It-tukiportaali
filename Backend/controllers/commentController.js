@@ -47,7 +47,7 @@ export async function createTicketComment(req, res) {
         content,
         ticketId: Number(ticketId),
         userId,
-            },
+        },
     });
 
     res.status(201).json(comment);
@@ -94,5 +94,26 @@ export async function updateTicketComment(req, res){
 }
 
 export async function deleteTicketComment(req, res) {
-    
+    const { ticketId, commentId } = req.params;
+    const userId = req.user.id;
+    try {
+        const comment = await prisma.comment.findUnique({
+            where: { id: Number(commentId) },
+        });
+        if (!comment || comment.ticketId !== Number(ticketId)) {
+            return res.status(404).json({ error: "Comment not found" });
+        }
+        if (comment.userId !== userId) {
+            return res.status(403).json({ error: "Not allowed to delete this comment" });
+        }
+        await prisma.comment.delete({
+            where: { id: Number(commentId) },
+        });
+        return res.json({ message: "Comment deleted successfully" });
+    }
+
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Failed to delete comment" });
+    }
 }
