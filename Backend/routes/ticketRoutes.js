@@ -28,8 +28,10 @@ router.delete("/delete/:id", authenticate, deleteTicket);
 
 //COMMENT ROUTES FOR TICKETS
 
+// GET /api/tickets/:id/getcomment - get comment
 router.get("/:id/getcomment", authenticate, getTicketComment);
 
+// POST /api/tickets/:id/createcomment - get comment
 router.post("/:id/createcomment", authenticate, createTicketComment);
 
 export default router;
