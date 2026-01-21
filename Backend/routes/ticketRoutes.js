@@ -7,6 +7,7 @@ import {
   updateTicket,
   deleteTicket
 } from "../controllers/ticketController.js";
+import { getTicketComment, createTicketComment } from "../controllers/commentController.js";
 
 const router = express.Router();
 
@@ -24,5 +25,11 @@ router.put("/update/:id", authenticate, updateTicket);
 
 // DELETE /api/tickets/delete:id - delete ticket
 router.delete("/delete/:id", authenticate, deleteTicket);
+
+//COMMENT ROUTES FOR TICKETS
+
+router.get("/:id/getcomment", authenticate, getTicketComment);
+
+router.post("/:id/createcomment", authenticate, createTicketComment);
 
 export default router;
