@@ -55,3 +55,40 @@ export async function createTicketComment(req, res) {
         res.status(500).json({ error: "Failed to create comment" });
     }
 }
+
+export async function updateTicketComment(req, res){
+
+    const { ticketId, commentId } = req.params;
+    const { content } = req.body;
+    const userId = req.user.id; 
+
+    if (!content || content.trim() === "") {
+    return res.status(400).json({ error: "Comment content is required" });
+
+    } 
+    try{
+        const comment = await prisma.comment.findUnique({
+        where: {id: Number(commentId)},
+    });
+
+    if (!comment || comment.ticketId !== Number(ticketId)) {
+        return res.status(404).json({ error: "Comment not found" });
+    }
+
+    if (comment.userId !== userId) {
+        return res.status(403).json({ error: "Not allowed to edit this comment" });
+    }
+
+    const updatedComment = await prisma.comment.update({
+        where :{id: Number(commentId)},
+        data : {content},
+    });
+
+    return res.json(updatedComment);
+
+    }catch(error){
+        console.error(err);
+        return res.status(500).json({ error: "Failed to update comment" });
+    }
+
+}
