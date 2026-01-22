@@ -9,7 +9,7 @@ export async function getTicketComment(req, res) {
     }
     
     try {
-        const comments = prisma.ticket.findMany({
+        const comments = prisma.comment.findMany({
             where : {ticketid: id},
             orderBy: {createdAt : "asc"},
             include: {
