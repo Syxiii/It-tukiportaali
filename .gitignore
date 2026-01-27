@@ -7,7 +7,6 @@ frontend/vite-project/node_modules
 .env
 .env.dev
 .env.prod
-.env.test
 backend/.env
 frontend/.env
 
