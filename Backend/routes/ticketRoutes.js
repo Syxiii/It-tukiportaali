@@ -28,16 +28,16 @@ router.delete("/delete/:id", authenticate, deleteTicket);
 
 //COMMENT ROUTES FOR TICKETS
 
-// GET /api/tickets/:id/getcomment - get comment
-router.get("/:id/getcomment", authenticate, getTicketComment);
+// GET /api/tickets/:ticketId/getcomment - get comments for ticket
+router.get("/:ticketId/getcomment", authenticate, getTicketComment);
 
-// POST /api/tickets/:id/createcomment - create comment
-router.post("/:id/createcomment", authenticate, createTicketComment);
+// POST /api/tickets/:ticketId/createcomment - create comment
+router.post("/:ticketId/createcomment", authenticate, createTicketComment);
 
-// PUT /api/tickets/:id/updatacomment/:commentid - update comment
-router.put("/:id/updatecomment/:commentid", authenticate, updateTicketComment);
+// PUT /api/tickets/:ticketId/updatecomment/:commentid - update comment
+router.put("/:ticketId/updatecomment/:commentid", authenticate, updateTicketComment);
 
-// DELETE /api/tickets/:id/deletecomment/:commentid - delete comment
-router.delete("/:id/deletecomment/:commentid", authenticate, deleteTicketComment);
+// DELETE /api/tickets/:ticketId/deletecomment/:commentid - delete comment
+router.delete("/:ticketId/deletecomment/:commentid", authenticate, deleteTicketComment);
 
 export default router;

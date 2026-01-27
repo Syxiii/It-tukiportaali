@@ -1,4 +1,4 @@
-function TicketCard({ ticket, isAdmin = false, onStatusChange }) {
+function TicketCard({ ticket, isAdmin = false, onStatusChange, onClick }) {
   const statusClass = ticket.status === "Avoin" ? "badge-avoin"
                     : ticket.status === "Käsittelyssä" ? "badge-kasittelyssa"
                     : "badge-ratkaistu";
@@ -8,7 +8,18 @@ function TicketCard({ ticket, isAdmin = false, onStatusChange }) {
                    : "🟢";
 
   return (
-    <div className="ticket-card">
+    <div
+      className={`ticket-card ${onClick ? "ticket-card-clickable" : ""}`}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (onClick && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+    >
       <div className="ticket-header">
         <div className="ticket-title-section">
           <h3>{ticket.title}</h3>
