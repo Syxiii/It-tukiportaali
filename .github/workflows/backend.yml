@@ -23,8 +23,14 @@ jobs:
 
       - name: Wait for Postgres
         run: |
-          apt-get update && apt-get install -y wait-for-it
-          wait-for-it postgres:5432 --timeout=30 --strict
+          for i in {1..30}; do
+            if nc -z postgres 5432; then
+              echo "Postgres is up"
+              break
+            fi
+            echo "Waiting for Postgres..."
+            sleep 2
+          done
       - run: cd Backend && npx prisma migrate deploy --schema=prisma/schema.prisma
         env:
           DATABASE_URL: postgresql://test:test@postgres:5432/test_db
