@@ -28,6 +28,9 @@ jobs:
           node-version: 20
       - run: cd Backend && npm ci
 
+      - name: Install Postgres client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
       - name: Wait for Postgres
         run: |
           echo "Waiting for Postgres..."
