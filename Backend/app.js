@@ -9,7 +9,10 @@ import statsRoutes from "./routes/statsRoutes.js";
 const app = express();
 
 // Global middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://luckybunny.eu", // frontend domain
+  credentials: true,
+}));
 app.use(express.json());
 
 // Route mounting
