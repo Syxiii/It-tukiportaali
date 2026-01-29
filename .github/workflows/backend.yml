@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u syxiii --password-stdin
+      - run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u syxiii --password-stdin
       - run: |
           cd Backend
           docker build -t ghcr.io/syxiii/backend:latest .
@@ -62,6 +62,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u syxiii --password-stdin
             cd /var/www/backend
-            docker compose pull
-            docker compose up -d
+            docker-compose pull
+            docker-compose up -d
