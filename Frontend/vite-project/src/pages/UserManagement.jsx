@@ -47,7 +47,7 @@ export default function UserManagement({ token }) {
   const deleteUser = async (id) => {
     if (!confirm("Oletko varma että haluat poistaa käyttäjän?")) return;
     try {
-      await api.delete(`/auth/deleteusers/${id}`, {
+      await api.delete(`/auth/deleteuser/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(users.filter((u) => u.id !== id));
