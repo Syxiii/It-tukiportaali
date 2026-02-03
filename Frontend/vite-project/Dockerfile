@@ -1,15 +1,16 @@
-FROM node:20-alpine
+# Build stage
+FROM node:20-alpine AS build
 
 WORKDIR /app
-
-RUN apk add --no-cache bash git openssh python3 make g++
-
 COPY package*.json ./
-
 RUN npm ci
 
 COPY . .
+RUN npm run build
 
-EXPOSE 3001
+FROM nginx:alpine
 
-CMD ["sh", "-c", "npm run build"]
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80

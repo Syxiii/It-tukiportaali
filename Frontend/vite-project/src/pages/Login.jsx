@@ -160,8 +160,8 @@ export default function Login({ onLogin }) {
         <p>
           <strong>Demokäyttäjät:</strong>
         </p>
-        <p>rasmus / 1234</p>
-        <p>it / admin (Admin)</p>
+        <p>e</p>
+        <p>e</p>
       </div>
     </div>
   );
