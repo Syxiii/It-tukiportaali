@@ -82,6 +82,7 @@ export default function Login({ onLogin }) {
     }
   };
 
+
   return (
     <div className="login-page">
       <div className="login-box">
@@ -156,12 +157,6 @@ export default function Login({ onLogin }) {
           </>
         )}
 
-        <hr style={{ margin: "20px 0" }} />
-        <p>
-          <strong>Demokäyttäjät:</strong>
-        </p>
-        <p>e</p>
-        <p>e</p>
       </div>
     </div>
   );

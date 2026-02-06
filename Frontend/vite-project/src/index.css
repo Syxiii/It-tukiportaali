@@ -10,7 +10,7 @@ body {
 
 .app {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* Sidebar */
@@ -19,6 +19,7 @@ body {
   background: #0f172a;
   color: white;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .logo {
@@ -121,6 +122,7 @@ nav button:hover {
 .login-box button {
   width: 100%;
 }
+
 
 .user {
   margin-bottom: 20px;
@@ -262,6 +264,10 @@ nav button:hover {
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
+.ticket-card-clickable {
+  cursor: pointer;
+}
+
 .ticket-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
@@ -363,6 +369,107 @@ nav button:hover {
   outline: none;
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Ticket Detail Modal */
+.ticket-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.ticket-detail-modal {
+  background: white;
+  width: 100%;
+  max-width: 720px;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  max-height: 85vh;
+  overflow: auto;
+}
+
+.ticket-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.ticket-detail-meta {
+  color: #64748b;
+  font-size: 13px;
+  margin: 0 0 10px 0;
+}
+
+.ticket-detail-description {
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.modal-close-button:hover {
+  color: #ef4444;
+}
+
+.comments-section h4 {
+  margin: 12px 0;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  display: grid;
+  gap: 10px;
+}
+
+.comment-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.comment-date {
+  white-space: nowrap;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.comment-form button {
+  margin-top: 10px;
+  width: 100%;
 }
 
 /* Welcome Page */
