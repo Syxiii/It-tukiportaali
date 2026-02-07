@@ -1,9 +1,15 @@
-import { ActivityIndicator, SafeAreaView, View } from "react-native";
-import { useAuth } from "./hooks/useAuth";
-import LoginScreen from "./screens/LoginScreen";
+import { ActivityIndicator, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+// debug: log core imports to help trace runtime undefined errors
+console.log('NavigationContainer:', NavigationContainer);
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useAuth } from "./src/hooks/useAuth";
+import RootNavigator from "./src/navigation/RootNavigator";
+
+const queryClient = new QueryClient();
 
 export default function App() {
-  const { loading, isLoggedIn } = useAuth();
+  const { loading } = useAuth();
 
   if (loading) {
     return (
@@ -14,8 +20,10 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {isLoggedIn ? <View /> : <LoginScreen />}
-    </SafeAreaView>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }

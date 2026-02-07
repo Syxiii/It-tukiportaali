@@ -2,17 +2,16 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }: any) {
   const { saveToken } = useAuth();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    // TÄSSÄ VAIHEESSA feikki-token
-    // myöhemmin vaihdetaan backend API -kutsuun
     await saveToken("FAKE_TOKEN");
+    navigation.replace("Tickets");
   };
+
 
   return (
     <View style={styles.container}>
