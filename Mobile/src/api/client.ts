@@ -2,7 +2,7 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8080", // VAIHDA tähän OIKEA IPv4
+  baseURL: "https://api.luckybunny.eu/api",
 });
 
 api.interceptors.request.use(async (config) => {
