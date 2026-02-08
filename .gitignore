@@ -5,8 +5,8 @@ frontend/vite-project/node_modules
 
 # Env variables
 .env
-.env.dev
 .env.prod
+.env.dev.frontend
 backend/.env
 frontend/.env
 

@@ -4,7 +4,7 @@ import axios from "axios";
 const baseURL =
   process.env.NODE_ENV === "production"
     ? "https://api.luckybunny.eu/api" // production API
-    : "http://localhost:3000/api";    // development API
+    : "http://localhost:8080/api";    // development API
 
 const api = axios.create({ baseURL });
 

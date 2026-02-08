@@ -1,15 +1,9 @@
-1. BACKEND
+1. BACKEND AND FRONTEND
 
-- Clone the repo and cd Backend
-- Create the env.dev file for local development
-- run npm run dev at Backend root
+- Pre-requisites: Docker Desktop and docker-compose.
 
-- For Production deployment push to the main branch and it will automatically run tests and deploy it on the cloud
-
-2. FRONTEND
-- Clone the repo and cd Frontend/vite-project
-- run npm run dev at vite-project root
-
+- To launch a dev only version of the project use the provided docker-compose.dev.yml in the root folder by running docker compose -f docker-compose.dev.yml up --build
+- After running you should have frontend runnning on localhost:5173 and backend on localhost:8080, and any changes you make to the code will be hotswapped to the container.
 
 - For Production deployment push to the main branch and it will automatically run tests and deploy it on the cloud
 
