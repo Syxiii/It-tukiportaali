@@ -104,7 +104,9 @@ export default function Login({ onLogin }) {
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}
             />
-            <button onClick={handleLogin}>Kirjaudu</button>
+            <button className="primary-button" onClick={handleLogin}>
+              Kirjaudu
+            </button>
             <p>
               Ei ole vielä käyttäjää?{" "}
               <button
@@ -144,7 +146,9 @@ export default function Login({ onLogin }) {
               onChange={(e) => setConfirmPassword(e.target.value)}
               onKeyPress={handleKeyPress}
             />
-            <button onClick={handleRegister}>Luo käyttäjä</button>
+            <button className="primary-button" onClick={handleRegister}>
+              Luo käyttäjä
+            </button>
             <p>
               Sinulla on jo käyttäjä?{" "}
               <button
