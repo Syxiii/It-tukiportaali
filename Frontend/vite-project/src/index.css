@@ -549,6 +549,7 @@ nav button:hover {
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 12px;
+  position: relative;
 }
 
 .comment-header {
@@ -558,6 +559,23 @@ nav button:hover {
   font-size: 12px;
   color: #64748b;
   margin-bottom: 6px;
+}
+
+.delete-comment-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.delete-comment-btn:hover {
+  background: #dc2626;
 }
 
 .comment-date {

@@ -73,7 +73,7 @@ export default function App() {
           <button onClick={() => setPage("welcome")}>Etusivu</button>
           {currentUser.role === "ADMIN" && (
             <>
-              <button onClick={() => setPage("dashboard")}>Dashboard</button>
+              <button onClick={() => setPage("dashboard")}>Hallintapaneeli</button>
               <button onClick={() => setPage("users")}>Käyttäjät</button>
             </>
           )}

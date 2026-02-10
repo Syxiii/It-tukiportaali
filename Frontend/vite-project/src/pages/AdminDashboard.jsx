@@ -104,6 +104,18 @@ export default function AdminDashboard({ token }) {
     }
   };
 
+  const handleDeleteComment = async (commentId) => {
+    if (!confirm("Oletko varma että haluat poistaa kommentin?")) return;
+
+    try {
+      await api.delete(`/tickets/${selectedTicket.id}/deletecomment/${commentId}`);
+      await loadComments(selectedTicket.id);
+    } catch (error) {
+      const msg = error.response?.data?.message || error.response?.data?.error || "Kommentin poisto epäonnistui";
+      alert(msg);
+    }
+  };
+
   const stats = {
     Avoin: tickets.filter((t) => t.status === STATUS.AVOIN).length,
     "Käsittelyssä": tickets.filter((t) => t.status === STATUS.KASITTELYSSA).length,
@@ -119,7 +131,7 @@ export default function AdminDashboard({ token }) {
 
   return (
     <div className="container">
-      <h2>IT-tuen hallintapaneeli</h2>
+      <h2>Hallintapaneeli</h2>
 
       <div className="stats">
         {Object.entries(stats).map(([status, count]) => (
@@ -215,6 +227,12 @@ export default function AdminDashboard({ token }) {
                         </span>
                       </div>
                       <p>{comment.content}</p>
+                      <button
+                        className="delete-comment-btn"
+                        onClick={() => handleDeleteComment(comment.id)}
+                      >
+                        Poista
+                      </button>
                     </li>
                   ))}
                 </ul>

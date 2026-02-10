@@ -40,6 +40,6 @@ router.post("/:ticketId/createcomment", authenticate, createTicketComment);
 router.put("/:ticketId/updatecomment/:commentid", authenticate, updateTicketComment);
 
 // DELETE /api/tickets/:ticketId/deletecomment/:commentid - delete comment
-router.delete("/:ticketId/deletecomment/:commentid", authenticate, deleteTicketComment);
+router.delete("/:ticketId/deletecomment/:commentid", authenticate,requireAdmin, deleteTicketComment);
 
 export default router;
