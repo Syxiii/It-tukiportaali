@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  tickets      Ticket[]
+  comments     Comment[]
+}
+
+model Ticket {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String
+  status      TicketStatus @default(AVOIN)
+  priority    Priority     @default(KESKITASO)
+  userId      Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id])
+  comments    Comment[]
+}
+
+model Comment {
+  id        Int            @id @default(autoincrement())
+  content   String
+
+  ticketId  Int
+  userId    Int
+
+  createdAt DateTime       @default(now())
+
+  ticket    Ticket         @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum TicketStatus {
+  AVOIN
+  KASITTELYSSA
+  RATKAISTU
+}
+
+enum Priority {
+  MATALA
+  KESKITASO
+  KORKEA
+}
+
+//fix

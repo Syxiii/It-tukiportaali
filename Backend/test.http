@@ -1,0 +1,73 @@
+### IT-tukiportaali API Testit
+
+@baseUrl = http://localhost:5000
+@token = fake-jwt-token
+
+### 1. Terveystarkistus - Palvelimen status
+GET {{baseUrl}}/
+
+### 2. Kirjautuminen (Login)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "matti@example.com",
+  "password": "matti123"
+}
+
+### 3. Kirjautuminen - Admin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### 4. Uloskirjautuminen (Logout)
+POST {{baseUrl}}/api/auth/logout
+
+### 5. Hae kaikki tiketit
+GET {{baseUrl}}/api/tickets
+
+### 6. Hae yksittäinen tiketti (ID: 1)
+GET {{baseUrl}}/api/tickets/1
+
+### 7. Hae omani tiketit
+GET {{baseUrl}}/api/my-tickets
+Authorization: Bearer {{token}}
+
+### 8. Luo uusi tiketti
+POST {{baseUrl}}/api/tickets
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Tietokone ei käynnisty",
+  "description": "Tietokoneeni ei käynnisty enää",
+  "priority": "Korkea"
+}
+
+### 9. Päivitä tiketti (ID: 1)
+PUT {{baseUrl}}/api/tickets/1
+Content-Type: application/json
+
+{
+  "status": "Käsittelyssä",
+  "priority": "Korkea"
+}
+
+### 10. Muuta tiketin statusta ratkaisuksi
+PUT {{baseUrl}}/api/tickets/2
+Content-Type: application/json
+
+{
+  "status": "Ratkaistu",
+  "title": "Tulostin korjattu"
+}
+
+### 11. Poista tiketti (ID: 3)
+DELETE {{baseUrl}}/api/tickets/3
+
+### 12. Hae tilastot (Dashboard)
+GET {{baseUrl}}/api/stats/dashboard

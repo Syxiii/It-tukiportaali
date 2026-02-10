@@ -168,3 +168,5 @@ export async function logout(req, res) {
   // JWT is stateless → no DB action required
   return res.status(200).json({ message: "Kirjauduttu ulos onnistuneesti" });
 }
+
+//Dd

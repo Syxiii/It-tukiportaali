@@ -1,4 +1,4 @@
-# Ignore node_modules on host
+# Ignore node_modules on host dd
 node_modules
 
 

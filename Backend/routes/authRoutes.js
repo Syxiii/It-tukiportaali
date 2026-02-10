@@ -1,3 +1,4 @@
+//fix
 import express from "express";
 import { login, logout, register, getUsers, deleteUser, toggle} from "../controllers/authController.js";
 import { authenticate, requireAdmin } from "../middleware/authMiddleware.js";
