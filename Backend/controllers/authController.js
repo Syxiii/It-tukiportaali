@@ -171,7 +171,7 @@ export async function logout(req, res) {
 
 export async function updateUser(req, res) {
   try {
-    const userId = Number(req.body.userId)
+    const userId = parseInt(req.params.id);
     const { name, email, password } = req.body
 
     if (!userId) {
