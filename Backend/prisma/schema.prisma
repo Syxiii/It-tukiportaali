@@ -60,5 +60,3 @@ enum Priority {
   KESKITASO
   KORKEA
 }
-
-//fix
