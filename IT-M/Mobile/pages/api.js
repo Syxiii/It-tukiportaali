@@ -1,8 +1,8 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Määritä baseURL ympäristön mukaan
-const baseURL = "https://api.luckybunny.eu/api"; // Käytä tuotanto-API:ta
+// Base URL for mobile, aligned with the web frontend.
+const baseURL = "https://api.luckybunny.eu/api";
 
 const api = axios.create({ baseURL });
 

@@ -74,8 +74,12 @@ export async function updateTicket(req, res) {
 
       const statusMap = {
       Avoin: "AVOIN",
+      AVOIN: "AVOIN",
       "Käsittelyssä": "KASITTELYSSA",
-      Ratkaistu: "RATKAISTU"
+      Kasittelyssa: "KASITTELYSSA",
+      KASITTELYSSA: "KASITTELYSSA",
+      Ratkaistu: "RATKAISTU",
+      RATKAISTU: "RATKAISTU",
     };
 
     const ticket = await prisma.ticket.findUnique({ where: { id: parseInt(id) } });

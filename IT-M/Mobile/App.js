@@ -48,6 +48,13 @@ export default function App() {
     }
   };
 
-  return <AppNavigator onLogin={handleLogin} />;
+  return (
+    <AppNavigator
+      onLogin={handleLogin}
+      onLogout={handleLogout}
+      currentUser={currentUser}
+      token={token}
+    />
+  );
 }
 
