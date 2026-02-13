@@ -7,73 +7,73 @@ export default function Welcome({ navigation, currentUser, onLogout }) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>IT Support Portal</Text>
-      <Text style={styles.subtitle}>Welcome {displayName}</Text>
+      <Text style={styles.title}>IT-tukipalvelu</Text>
+      <Text style={styles.subtitle}>Tervetuloa {displayName}</Text>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Create a new ticket</Text>
+        <Text style={styles.cardTitle}>Luo uusi tiketti</Text>
         <Text style={styles.cardText}>
-          Submit a new support request with details and priority.
+          Lähetä uusi tukipyyntö, jossa on tiedot ja prioriteetti.
         </Text>
         <TouchableOpacity
           style={styles.primaryButton}
           onPress={() => navigation.navigate("CreateTicket")}
         >
-          <Text style={styles.primaryButtonText}>Create ticket</Text>
+          <Text style={styles.primaryButtonText}>Luo tiketti</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>My tickets</Text>
+        <Text style={styles.cardTitle}>Omat tiketit</Text>
         <Text style={styles.cardText}>
-          Track your requests and add comments.
+          Seuraa pyyntöjäsi ja lisää kommentteja.
         </Text>
         <TouchableOpacity
           style={styles.secondaryButton}
           onPress={() => navigation.navigate("MyTickets")}
         >
-          <Text style={styles.secondaryButtonText}>Open my tickets</Text>
+          <Text style={styles.secondaryButtonText}>Avaa omat tiketit</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>FAQ</Text>
         <Text style={styles.cardText}>
-          Quick answers for common issues and security guidance.
+          Nopeat vastaukset yleisiin ongelmiin ja tietoturvaohjeisiin.
         </Text>
         <TouchableOpacity
           style={styles.secondaryButton}
           onPress={() => navigation.navigate("FAQ")}
         >
-          <Text style={styles.secondaryButtonText}>Open FAQ</Text>
+          <Text style={styles.secondaryButtonText}>Avaa FAQ</Text>
         </TouchableOpacity>
       </View>
 
       {isAdmin ? (
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Admin tools</Text>
+          <Text style={styles.cardTitle}>Ylläpito</Text>
           <Text style={styles.cardText}>
-            Manage tickets and users.
+            Hallitse tiketteja ja käyttäjiä.
           </Text>
           <View style={styles.adminRow}>
             <TouchableOpacity
               style={styles.secondaryButton}
               onPress={() => navigation.navigate("AdminDashboard")}
             >
-              <Text style={styles.secondaryButtonText}>Dashboard</Text>
+              <Text style={styles.secondaryButtonText}>Hallintapaneeli</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.secondaryButton}
               onPress={() => navigation.navigate("UserManagement")}
             >
-              <Text style={styles.secondaryButtonText}>Users</Text>
+              <Text style={styles.secondaryButtonText}>Käyttäjät</Text>
             </TouchableOpacity>
           </View>
         </View>
       ) : null}
 
       <TouchableOpacity style={styles.logoutButton} onPress={onLogout}>
-        <Text style={styles.logoutText}>Log out</Text>
+        <Text style={styles.logoutText}>Kirjaudu ulos</Text>
       </TouchableOpacity>
     </ScrollView>
   );

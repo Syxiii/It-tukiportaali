@@ -19,6 +19,18 @@ const statusActions = [
   { label: "Ratkaistu", value: "Ratkaistu" },
 ];
 
+const priorityColors = {
+  KORKEA: "#ef4444",
+  KESKITASO: "#f59e0b",
+  MATALA: "#10b981",
+};
+
+const priorityLabels = {
+  KORKEA: "Korkea",
+  KESKITASO: "Keskitaso",
+  MATALA: "Matala",
+};
+
 export default function AdminDashboard() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,8 +46,8 @@ export default function AdminDashboard() {
         const res = await api.get("/tickets/gettickets");
         setTickets(res.data || []);
       } catch (error) {
-        const message = error?.response?.data?.message || "Ticket fetch failed";
-        Alert.alert("Error", message);
+        const message = error?.response?.data?.message || "Tikettien haku epäonnistui";
+        Alert.alert("Virhe", message);
       } finally {
         setLoading(false);
       }
@@ -51,16 +63,16 @@ export default function AdminDashboard() {
       });
       setTickets((prev) => prev.map((t) => (t.id === id ? res.data : t)));
     } catch (error) {
-      const message = error?.response?.data?.message || "Status update failed";
-      Alert.alert("Error", message);
+      const message = error?.response?.data?.message || "Tilan päivitys epäonnistui";
+      Alert.alert("Virhe", message);
     }
   };
 
   const confirmDeleteTicket = (id) => {
-    Alert.alert("Confirm", "Delete this ticket?", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("Vahvista", "Poistetaanko tiketti?", [
+      { text: "Peruuta", style: "cancel" },
       {
-        text: "Delete",
+        text: "Poista",
         style: "destructive",
         onPress: () => deleteTicket(id),
       },
@@ -72,8 +84,8 @@ export default function AdminDashboard() {
       await api.delete(`/tickets/delete/${id}`);
       setTickets((prev) => prev.filter((t) => t.id !== id));
     } catch (error) {
-      const message = error?.response?.data?.message || "Delete failed";
-      Alert.alert("Error", message);
+      const message = error?.response?.data?.message || "Poisto epäonnistui";
+      Alert.alert("Virhe", message);
     }
   };
 
@@ -86,8 +98,8 @@ export default function AdminDashboard() {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        "Comment fetch failed";
-      Alert.alert("Error", message);
+        "Kommenttien haku epäonnistui";
+      Alert.alert("Virhe", message);
     } finally {
       setCommentsLoading(false);
     }
@@ -118,18 +130,18 @@ export default function AdminDashboard() {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        "Comment create failed";
-      Alert.alert("Error", message);
+        "Kommentin luonti epäonnistui";
+      Alert.alert("Virhe", message);
     } finally {
       setPostingComment(false);
     }
   };
 
   const confirmDeleteComment = (commentId) => {
-    Alert.alert("Confirm", "Delete this comment?", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("Vahvista", "Poistetaanko kommentti?", [
+      { text: "Peruuta", style: "cancel" },
       {
-        text: "Delete",
+        text: "Poista",
         style: "destructive",
         onPress: () => deleteComment(commentId),
       },
@@ -147,8 +159,8 @@ export default function AdminDashboard() {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        "Comment delete failed";
-      Alert.alert("Error", message);
+        "Kommentin poisto epäonnistui";
+      Alert.alert("Virhe", message);
     }
   };
 
@@ -156,14 +168,14 @@ export default function AdminDashboard() {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#2563eb" />
-        <Text style={styles.mutedText}>Loading tickets...</Text>
+        <Text style={styles.mutedText}>Ladataan tiketteja...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Admin dashboard</Text>
+      <Text style={styles.title}>Ylläpidon hallintapaneeli</Text>
       <FlatList
         data={tickets}
         keyExtractor={(item) => String(item.id)}
@@ -174,8 +186,24 @@ export default function AdminDashboard() {
             onPress={() => handleSelectTicket(item)}
           >
             <Text style={styles.cardTitle}>{item.title}</Text>
-            <Text style={styles.cardMeta}>Status: {item.status}</Text>
-            <Text style={styles.cardMeta}>User: {item.user?.name}</Text>
+            <Text style={styles.cardMeta}>Tila: {item.status}</Text>
+            <Text style={styles.cardMeta}>Käyttäjä: {item.user?.name}</Text>
+            <View style={styles.metaRow}>
+              <Text style={styles.cardMeta}>Prioriteetti:</Text>
+              <View
+                style={[
+                  styles.priorityBadge,
+                  {
+                    backgroundColor:
+                      priorityColors[item.priority] || "#334155",
+                  },
+                ]}
+              >
+                <Text style={styles.priorityBadgeText}>
+                  {priorityLabels[item.priority] || item.priority || "-"}
+                </Text>
+              </View>
+            </View>
             <View style={styles.statusRow}>
               {statusActions.map((status) => (
                 <TouchableOpacity
@@ -190,7 +218,7 @@ export default function AdminDashboard() {
                 style={[styles.statusButton, styles.deleteButton]}
                 onPress={() => confirmDeleteTicket(item.id)}
               >
-                <Text style={styles.statusButtonText}>Delete</Text>
+                <Text style={styles.statusButtonText}>Poista</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
@@ -202,26 +230,41 @@ export default function AdminDashboard() {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>{selectedTicket?.title}</Text>
             <TouchableOpacity onPress={handleCloseDetails}>
-              <Text style={styles.closeButton}>Close</Text>
+              <Text style={styles.closeButton}>Sulje</Text>
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.cardMeta}>Status: {selectedTicket?.status}</Text>
-          <Text style={styles.cardMeta}>
-            Priority: {selectedTicket?.priority || "-"}
-          </Text>
+          <Text style={styles.cardMeta}>Tila: {selectedTicket?.status}</Text>
+          <View style={styles.metaRow}>
+            <Text style={styles.cardMeta}>Prioriteetti:</Text>
+            <View
+              style={[
+                styles.priorityBadge,
+                {
+                  backgroundColor:
+                    priorityColors[selectedTicket?.priority] || "#334155",
+                },
+              ]}
+            >
+              <Text style={styles.priorityBadgeText}>
+                {priorityLabels[selectedTicket?.priority] ||
+                  selectedTicket?.priority ||
+                  "-"}
+              </Text>
+            </View>
+          </View>
           <Text style={styles.modalText}>{selectedTicket?.description}</Text>
 
-          <Text style={styles.sectionTitle}>Comments</Text>
+          <Text style={styles.sectionTitle}>Kommentit</Text>
           {commentsLoading ? (
             <ActivityIndicator size="small" color="#2563eb" />
           ) : comments.length === 0 ? (
-            <Text style={styles.mutedText}>No comments yet.</Text>
+            <Text style={styles.mutedText}>Ei kommentteja vielä.</Text>
           ) : (
             comments.map((comment) => (
               <View key={comment.id} style={styles.commentCard}>
                 <Text style={styles.commentAuthor}>
-                  {comment.user?.name || "User"}
+                  {comment.user?.name || "Käyttäjä"}
                 </Text>
                 <Text style={styles.commentDate}>
                   {comment.createdAt
@@ -233,7 +276,7 @@ export default function AdminDashboard() {
                   style={styles.commentDelete}
                   onPress={() => confirmDeleteComment(comment.id)}
                 >
-                  <Text style={styles.commentDeleteText}>Delete</Text>
+                  <Text style={styles.commentDeleteText}>Poista</Text>
                 </TouchableOpacity>
               </View>
             ))
@@ -242,7 +285,8 @@ export default function AdminDashboard() {
           <View style={styles.commentForm}>
             <TextInput
               style={styles.commentInput}
-              placeholder="Add a comment"
+              placeholder="Lisää kommentti"
+              placeholderTextColor="#94a3b8"
               value={commentText}
               onChangeText={setCommentText}
               multiline
@@ -253,7 +297,7 @@ export default function AdminDashboard() {
               disabled={postingComment || !commentText.trim()}
             >
               <Text style={styles.primaryButtonText}>
-                {postingComment ? "Saving..." : "Add comment"}
+                {postingComment ? "Tallennetaan..." : "Lisää kommentti"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -294,6 +338,22 @@ const styles = StyleSheet.create({
   cardMeta: {
     color: "#94a3b8",
     fontSize: 12,
+  },
+  metaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 4,
+  },
+  priorityBadge: {
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    marginLeft: 6,
+  },
+  priorityBadgeText: {
+    color: "#0b1120",
+    fontSize: 12,
+    fontWeight: "700",
   },
   statusRow: {
     flexDirection: "row",

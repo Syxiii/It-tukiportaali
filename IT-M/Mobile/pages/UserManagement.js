@@ -22,7 +22,7 @@ export default function UserManagement() {
       const res = await api.get("/auth/getusers");
       setUsers(res.data || []);
     } catch (error) {
-      Alert.alert("Error", "User fetch failed");
+      Alert.alert("Virhe", "Käyttäjien haku epäonnistui");
     }
   };
 
@@ -32,7 +32,7 @@ export default function UserManagement() {
 
   const addNewUser = async () => {
     if (!name || !email || !password) {
-      Alert.alert("Error", "Please fill all fields");
+      Alert.alert("Virhe", "Täytä kaikki kentät");
       return;
     }
 
@@ -43,18 +43,18 @@ export default function UserManagement() {
       setPassword("");
       setShowForm(false);
       await fetchUsers();
-      Alert.alert("Success", "User created");
+      Alert.alert("Onnistui", "Käyttäjä luotu");
     } catch (error) {
-      const message = error?.response?.data?.message || "User create failed";
-      Alert.alert("Error", message);
+      const message = error?.response?.data?.message || "Käyttäjän luonti epäonnistui";
+      Alert.alert("Virhe", message);
     }
   };
 
   const confirmDeleteUser = (id) => {
-    Alert.alert("Confirm", "Delete this user?", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("Vahvista", "Poistetaanko käyttäjä?", [
+      { text: "Peruuta", style: "cancel" },
       {
-        text: "Delete",
+        text: "Poista",
         style: "destructive",
         onPress: () => deleteUser(id),
       },
@@ -66,7 +66,7 @@ export default function UserManagement() {
       await api.delete(`/auth/deleteuser/${id}`);
       setUsers((prev) => prev.filter((user) => user.id !== id));
     } catch (error) {
-      Alert.alert("Error", "User delete failed");
+      Alert.alert("Virhe", "Käyttäjän poisto epäonnistui");
     }
   };
 
@@ -75,20 +75,20 @@ export default function UserManagement() {
       await api.put(`/auth/toggleadmin/${id}`, { userId: id });
       await fetchUsers();
     } catch (error) {
-      Alert.alert("Error", "Admin toggle failed");
+      Alert.alert("Virhe", "Ylläpito-oikeuden vaihto epäonnistui");
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>User management</Text>
+      <Text style={styles.title}>Käyttäjien hallinta</Text>
 
       <TouchableOpacity
         style={styles.toggleButton}
         onPress={() => setShowForm((prev) => !prev)}
       >
         <Text style={styles.toggleButtonText}>
-          {showForm ? "Cancel" : "+ Add user"}
+          {showForm ? "Peruuta" : "+ Lisää käyttäjä"}
         </Text>
       </TouchableOpacity>
 
@@ -96,26 +96,26 @@ export default function UserManagement() {
         <View style={styles.form}>
           <TextInput
             style={styles.input}
-            placeholder="Name"
+            placeholder="Nimi"
             value={name}
             onChangeText={setName}
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder="Sähköposti"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Salasana"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
           />
           <TouchableOpacity style={styles.primaryButton} onPress={addNewUser}>
-            <Text style={styles.primaryButtonText}>Create user</Text>
+            <Text style={styles.primaryButtonText}>Luo käyttäjä</Text>
           </TouchableOpacity>
         </View>
       ) : null}
@@ -129,7 +129,7 @@ export default function UserManagement() {
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{item.name}</Text>
               <Text style={styles.userRole}>
-                {item.role === "ADMIN" ? "Admin" : "User"}
+                {item.role === "ADMIN" ? "Ylläpito" : "Käyttäjä"}
               </Text>
             </View>
             <View style={styles.userActions}>
@@ -138,14 +138,16 @@ export default function UserManagement() {
                 onPress={() => toggleAdminStatus(item.id)}
               >
                 <Text style={styles.actionButtonText}>
-                  {item.role === "ADMIN" ? "Remove admin" : "Make admin"}
+                  {item.role === "ADMIN"
+                    ? "Poista ylläpitäjä oikeudet"
+                    : "Tee ylläpitäjäksi"}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionButton, styles.deleteButton]}
                 onPress={() => confirmDeleteUser(item.id)}
               >
-                <Text style={styles.actionButtonText}>Delete</Text>
+                <Text style={styles.actionButtonText}>Poista</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -19,6 +19,18 @@ const statusLabels = {
   RATKAISTU: "Ratkaistu",
 };
 
+const priorityColors = {
+  KORKEA: "#ef4444",
+  KESKITASO: "#f59e0b",
+  MATALA: "#10b981",
+};
+
+const priorityLabels = {
+  KORKEA: "Korkea",
+  KESKITASO: "Keskitaso",
+  MATALA: "Matala",
+};
+
 export default function MyTickets() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,8 +46,8 @@ export default function MyTickets() {
         const res = await api.get("/tickets/my");
         setTickets(res.data || []);
       } catch (error) {
-        const message = error?.response?.data?.message || "Ticket fetch failed";
-        Alert.alert("Error", message);
+        const message = error?.response?.data?.message || "Tikettien haku epäonnistui";
+        Alert.alert("Virhe", message);
       } finally {
         setLoading(false);
       }
@@ -53,8 +65,8 @@ export default function MyTickets() {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        "Comment fetch failed";
-      Alert.alert("Error", message);
+        "Kommenttien haku epäonnistui";
+      Alert.alert("Virhe", message);
     } finally {
       setCommentsLoading(false);
     }
@@ -85,8 +97,8 @@ export default function MyTickets() {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        "Comment create failed";
-      Alert.alert("Error", message);
+        "Kommentin luonti epäonnistui";
+      Alert.alert("Virhe", message);
     } finally {
       setPostingComment(false);
     }
@@ -96,19 +108,19 @@ export default function MyTickets() {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#2563eb" />
-        <Text style={styles.mutedText}>Loading tickets...</Text>
+        <Text style={styles.mutedText}>Ladataan tiketteja...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My tickets</Text>
+      <Text style={styles.title}>Omat tiketit</Text>
       {tickets.length === 0 ? (
         <View style={styles.emptyState}>
-          <Text style={styles.emptyTitle}>No tickets yet</Text>
+          <Text style={styles.emptyTitle}>Ei tikettejä vielä</Text>
           <Text style={styles.emptyText}>
-            Create a new ticket to get started.
+            Luo uusi tiketti aloittaaksesi.
           </Text>
         </View>
       ) : (
@@ -123,11 +135,24 @@ export default function MyTickets() {
             >
               <Text style={styles.cardTitle}>{item.title}</Text>
               <Text style={styles.cardMeta}>
-                Status: {statusLabels[item.status] || item.status || "-"}
+                Tila: {statusLabels[item.status] || item.status || "-"}
               </Text>
-              <Text style={styles.cardMeta}>
-                Priority: {item.priority || "-"}
-              </Text>
+              <View style={styles.metaRow}>
+                <Text style={styles.cardMeta}>Prioriteetti:</Text>
+                <View
+                  style={[
+                    styles.priorityBadge,
+                    {
+                      backgroundColor:
+                        priorityColors[item.priority] || "#334155",
+                    },
+                  ]}
+                >
+                  <Text style={styles.priorityBadgeText}>
+                    {priorityLabels[item.priority] || item.priority || "-"}
+                  </Text>
+                </View>
+              </View>
               <Text style={styles.cardText} numberOfLines={2}>
                 {item.description}
               </Text>
@@ -141,28 +166,43 @@ export default function MyTickets() {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>{selectedTicket?.title}</Text>
             <TouchableOpacity onPress={handleCloseDetails}>
-              <Text style={styles.closeButton}>Close</Text>
+              <Text style={styles.closeButton}>Sulje</Text>
             </TouchableOpacity>
           </View>
 
           <Text style={styles.cardMeta}>
-            Status: {statusLabels[selectedTicket?.status] || "-"}
+            Tila: {statusLabels[selectedTicket?.status] || "-"}
           </Text>
-          <Text style={styles.cardMeta}>
-            Priority: {selectedTicket?.priority || "-"}
-          </Text>
+          <View style={styles.metaRow}>
+            <Text style={styles.cardMeta}>Prioriteetti:</Text>
+            <View
+              style={[
+                styles.priorityBadge,
+                {
+                  backgroundColor:
+                    priorityColors[selectedTicket?.priority] || "#334155",
+                },
+              ]}
+            >
+              <Text style={styles.priorityBadgeText}>
+                {priorityLabels[selectedTicket?.priority] ||
+                  selectedTicket?.priority ||
+                  "-"}
+              </Text>
+            </View>
+          </View>
           <Text style={styles.modalText}>{selectedTicket?.description}</Text>
 
-          <Text style={styles.sectionTitle}>Comments</Text>
+          <Text style={styles.sectionTitle}>Kommentit</Text>
           {commentsLoading ? (
             <ActivityIndicator size="small" color="#2563eb" />
           ) : comments.length === 0 ? (
-            <Text style={styles.mutedText}>No comments yet.</Text>
+            <Text style={styles.mutedText}>Ei kommentteja vielä.</Text>
           ) : (
             comments.map((comment) => (
               <View key={comment.id} style={styles.commentCard}>
                 <Text style={styles.commentAuthor}>
-                  {comment.user?.name || "User"}
+                  {comment.user?.name || "Käyttäjä"}
                 </Text>
                 <Text style={styles.commentDate}>
                   {comment.createdAt
@@ -177,7 +217,8 @@ export default function MyTickets() {
           <View style={styles.commentForm}>
             <TextInput
               style={styles.commentInput}
-              placeholder="Add a comment"
+              placeholder="Lisää kommentti"
+              placeholderTextColor="#94a3b8"
               value={commentText}
               onChangeText={setCommentText}
               multiline
@@ -188,7 +229,7 @@ export default function MyTickets() {
               disabled={postingComment || !commentText.trim()}
             >
               <Text style={styles.primaryButtonText}>
-                {postingComment ? "Saving..." : "Add comment"}
+                {postingComment ? "Tallennetaan..." : "Lisää kommentti"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -229,6 +270,22 @@ const styles = StyleSheet.create({
   cardMeta: {
     color: "#94a3b8",
     fontSize: 12,
+  },
+  metaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 4,
+  },
+  priorityBadge: {
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    marginLeft: 6,
+  },
+  priorityBadgeText: {
+    color: "#0b1120",
+    fontSize: 12,
+    fontWeight: "700",
   },
   cardText: {
     color: "#e2e8f0",

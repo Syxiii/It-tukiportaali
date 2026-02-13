@@ -4,64 +4,64 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-nati
 const tabs = [
   {
     id: "password",
-    title: "How do I change my password?",
-    summary: "Change it from your profile settings.",
+    title: "Miten vaihdan salasanan?",
+    summary: "Vaihda se profiilin asetuksista.",
   },
   {
     id: "login",
-    title: "I cannot log in",
-    summary: "Check credentials or reset your password.",
+    title: "En pysty kirjautumaan",
+    summary: "Tarkista tunnukset tai nollaa salasana.",
   },
   {
     id: "locked",
-    title: "My account is locked",
-    summary: "Too many failed attempts can lock the account.",
+    title: "Tilini on lukittu",
+    summary: "Liian monet virheelliset yritykset voivat lukita tilin.",
   },
   {
     id: "verification",
-    title: "Why did I get a verification request?",
-    summary: "We notify when a login is detected on a new device.",
+    title: "Miksi sain vahvistuspyynnön?",
+    summary: "Ilmoitamme, kun kirjautuminen havaitaan uudella laitteella.",
   },
   {
     id: "security",
-    title: "How is my data protected?",
-    summary: "We use strong encryption and logging policies.",
+    title: "Miten tietojani suojataan?",
+    summary: "Käytämme vahvaa salausta ja lokituskäytäntöjä.",
   },
 ];
 
 const passwordSteps = [
-  "Log in with your current credentials.",
-  "Open the profile menu.",
-  "Choose Settings, then Change password.",
-  "Enter your current password and create a new one.",
-  "Confirm and save.",
-  "Log in again if prompted.",
+  "Kirjaudu nykyisillä tunnuksillasi.",
+  "Avaa profiilivalikko.",
+  "Valitse Asetukset ja sitten Vaihda salasana.",
+  "Syötä nykyinen salasana ja luo uusi.",
+  "Vahvista ja tallenna.",
+  "Kirjaudu uudelleen, jos pyydetään.",
 ];
 
 const securityTips = [
   {
-    title: "Strong password",
-    text: "Use at least 12 characters with mixed cases, numbers, and symbols.",
+    title: "Vahva salasana",
+    text: "Käytä vähintään 12 merkkiä, joissa on isoja ja pieniä kirjaimia, numeroita ja symboleja.",
   },
   {
-    title: "Avoid reuse",
-    text: "Do not reuse passwords across services.",
+    title: "Vältä uudelleenkäyttöä",
+    text: "Älä käytä samaa salasanaa eri palveluissa.",
   },
   {
-    title: "Phishing awareness",
-    text: "Avoid suspicious links and verify sender addresses.",
+    title: "Tietojenkalastelu",
+    text: "Vältä epäileviä linkkejä ja varmista lähettäjän osoite.",
   },
   {
-    title: "Device lock",
-    text: "Use automatic lock and update your OS regularly.",
+    title: "Lukitus",
+    text: "Käytä automaattista lukitusta ja päivitä käyttöjärjestelmä säännöllisesti.",
   },
   {
-    title: "Notifications",
-    text: "If you receive a suspicious login alert, change password immediately.",
+    title: "Ilmoitukset",
+    text: "Jos saat epäilevän kirjautumisilmoituksen, vaihda salasana heti.",
   },
   {
-    title: "Data handling",
-    text: "Support tickets are handled confidentially by authorized staff only.",
+    title: "Tietojen kasittely",
+    text: "Tukitiketit käsitellään luottamuksellisesti vain valtuutetun henkilön toimesta.",
   },
 ];
 
@@ -73,10 +73,10 @@ export default function FAQ() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>FAQ</Text>
-      <Text style={styles.subtitle}>Security and support guidance</Text>
+      <Text style={styles.subtitle}>Tietoturva- ja tukiopas</Text>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Security tips</Text>
+        <Text style={styles.sectionTitle}>Tietoturvavinkit</Text>
         {securityTips.map((tip) => (
           <View key={tip.title} style={styles.card}>
             <Text style={styles.cardTitle}>{tip.title}</Text>
@@ -86,7 +86,7 @@ export default function FAQ() {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Common questions</Text>
+        <Text style={styles.sectionTitle}>Yleiset kysymykset</Text>
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab.id}
@@ -108,9 +108,9 @@ export default function FAQ() {
             <Text style={styles.panelText}>{activeItem.summary}</Text>
             {activeTab === "login" ? (
               <View style={styles.panelList}>
-                <Text style={styles.panelItem}>1. Make sure Caps Lock is off.</Text>
-                <Text style={styles.panelItem}>2. Try a password reset.</Text>
-                <Text style={styles.panelItem}>3. Contact support if it continues.</Text>
+                <Text style={styles.panelItem}>1. Varmista, ettei Caps Lock ole päällä.</Text>
+                <Text style={styles.panelItem}>2. Kokeile salasanan nollausta.</Text>
+                <Text style={styles.panelItem}>3. Ota yhteys tukeen, jos ongelma jatkuu.</Text>
               </View>
             ) : null}
             {activeTab === "password" ? (
@@ -124,23 +124,23 @@ export default function FAQ() {
             ) : null}
             {activeTab === "locked" ? (
               <View style={styles.panelList}>
-                <Text style={styles.panelItem}>1. Wait 10 minutes before retrying.</Text>
-                <Text style={styles.panelItem}>2. Ask admin to unlock if needed.</Text>
-                <Text style={styles.panelItem}>3. Double-check your username.</Text>
+                <Text style={styles.panelItem}>1. Odota 10 minuuttia ennen uutta yritystä.</Text>
+                <Text style={styles.panelItem}>2. Pyydä ylläpitoa avaamaan tili tarvittaessa.</Text>
+                <Text style={styles.panelItem}>3. Tarkista käyttäjätunnus.</Text>
               </View>
             ) : null}
             {activeTab === "verification" ? (
               <View style={styles.panelList}>
-                <Text style={styles.panelItem}>1. Approve only if it was you.</Text>
-                <Text style={styles.panelItem}>2. Reject and change password if not.</Text>
-                <Text style={styles.panelItem}>3. Inform support for follow-up.</Text>
+                <Text style={styles.panelItem}>1. Hyväksy vain, jos se olit sinä.</Text>
+                <Text style={styles.panelItem}>2. Hylkää ja vaihda salasana, jos et ollut.</Text>
+                <Text style={styles.panelItem}>3. Ilmoita tuelle jatkoselvitystä varten.</Text>
               </View>
             ) : null}
             {activeTab === "security" ? (
               <View style={styles.panelList}>
-                <Text style={styles.panelItem}>1. Sessions are logged and monitored.</Text>
-                <Text style={styles.panelItem}>2. Access is restricted to staff.</Text>
-                <Text style={styles.panelItem}>3. Redundancy ensures continuity.</Text>
+                <Text style={styles.panelItem}>1. Istunnot lokitetaan ja valvotaan.</Text>
+                <Text style={styles.panelItem}>2. Pääsy on rajattu henkilöstölle.</Text>
+                <Text style={styles.panelItem}>3. Varmistus takaa jatkuvuuden.</Text>
               </View>
             ) : null}
           </View>

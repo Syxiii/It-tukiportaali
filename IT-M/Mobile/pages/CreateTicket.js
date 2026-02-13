@@ -11,10 +11,16 @@ import {
 import api from "./api";
 
 const priorities = [
-  { label: "High", value: "KORKEA" },
-  { label: "Medium", value: "KESKITASO" },
-  { label: "Low", value: "MATALA" },
+  { label: "Korkea", value: "KORKEA" },
+  { label: "Keskitaso", value: "KESKITASO" },
+  { label: "Matala", value: "MATALA" },
 ];
+
+const priorityColors = {
+  KORKEA: "#ef4444",
+  KESKITASO: "#f59e0b",
+  MATALA: "#10b981",
+};
 
 export default function CreateTicket() {
   const [title, setTitle] = useState("");
@@ -24,7 +30,7 @@ export default function CreateTicket() {
 
   const submitTicket = async () => {
     if (!title || !description) {
-      Alert.alert("Error", "Please fill title and description");
+      Alert.alert("Virhe", "Täytä otsikko ja kuvaus");
       return;
     }
 
@@ -38,11 +44,11 @@ export default function CreateTicket() {
       setTitle("");
       setDescription("");
       setPriority("KESKITASO");
-      Alert.alert("Success", "Ticket created successfully");
+      Alert.alert("Onnistui", "Tiketti luotu onnistuneesti");
     } catch (error) {
       const message =
-        error?.response?.data?.message || "Ticket creation failed";
-      Alert.alert("Error", message);
+        error?.response?.data?.message || "Tiketin luonti epäonnistui";
+      Alert.alert("Virhe", message);
     } finally {
       setSubmitting(false);
     }
@@ -50,34 +56,44 @@ export default function CreateTicket() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Create ticket</Text>
+      <Text style={styles.title}>Luo tiketti</Text>
 
-      <Text style={styles.label}>Title</Text>
+      <Text style={styles.label}>Otsikko</Text>
       <TextInput
         style={styles.input}
-        placeholder="Ticket title"
+        placeholder="Tiketin otsikko"
+        placeholderTextColor="#94a3b8"
         value={title}
         onChangeText={setTitle}
       />
 
-      <Text style={styles.label}>Description</Text>
+      <Text style={styles.label}>Kuvaus</Text>
       <TextInput
         style={[styles.input, styles.textarea]}
-        placeholder="Describe the issue"
+        placeholder="Kuvaa ongelma"
+        placeholderTextColor="#94a3b8"
         value={description}
         onChangeText={setDescription}
         multiline
       />
 
-      <Text style={styles.label}>Priority</Text>
+      <Text style={styles.label}>Prioriteetti</Text>
       <View style={styles.priorityRow}>
         {priorities.map((item) => (
           <TouchableOpacity
             key={item.value}
             style={
               item.value === priority
-                ? [styles.priorityButton, styles.priorityButtonActive]
-                : styles.priorityButton
+                ? [
+                    styles.priorityButton,
+                    styles.priorityButtonActive,
+                    { backgroundColor: priorityColors[item.value] },
+                  ]
+                : [
+                    styles.priorityButton,
+                    styles.priorityButtonInactive,
+                    { backgroundColor: priorityColors[item.value] },
+                  ]
             }
             onPress={() => setPriority(item.value)}
           >
@@ -100,7 +116,7 @@ export default function CreateTicket() {
         disabled={submitting}
       >
         <Text style={styles.submitButtonText}>
-          {submitting ? "Submitting..." : "Submit"}
+          {submitting ? "Lähetetään..." : "Lähetä"}
         </Text>
       </TouchableOpacity>
     </ScrollView>
@@ -139,21 +155,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   priorityButton: {
-    backgroundColor: "#1f2937",
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 8,
     marginRight: 10,
   },
   priorityButtonActive: {
-    backgroundColor: "#2563eb",
+    borderWidth: 1,
+    borderColor: "#f8fafc",
+  },
+  priorityButtonInactive: {
+    opacity: 0.6,
   },
   priorityButtonText: {
-    color: "#e2e8f0",
+    color: "#0b1120",
     fontWeight: "600",
   },
   priorityButtonTextActive: {
-    color: "white",
+    color: "#0b1120",
     fontWeight: "700",
   },
   submitButton: {

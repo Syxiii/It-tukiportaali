@@ -18,7 +18,7 @@ const Login = ({ navigation, onLogin }) => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert("Virhe", "Tayta kaikki kentat");
+      Alert.alert("Virhe", "Täytä kaikki kentät");
       return;
     }
 
@@ -31,19 +31,19 @@ const Login = ({ navigation, onLogin }) => {
       navigation.navigate("Welcome");
     } catch (error) {
       const message =
-        error?.response?.data?.message || "Kirjautuminen epaonnistui";
+        error?.response?.data?.message || "Kirjautuminen epäonnistui";
       Alert.alert("Virhe", message);
     }
   };
 
   const handleRegister = async () => {
     if (!email || !name || !password || !confirmPassword) {
-      Alert.alert("Virhe", "Tayta kaikki kentat");
+      Alert.alert("Virhe", "Täytä kaikki kentät");
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Virhe", "Salasanat eivat täsmää");
+      Alert.alert("Virhe", "Salasanat eivät täsmää");
       return;
     }
 
@@ -54,7 +54,7 @@ const Login = ({ navigation, onLogin }) => {
         password,
       });
 
-      Alert.alert("Onnistui", "Kayttaja luotu. Kirjaudu sisaan.");
+      Alert.alert("Onnistui", "Käyttäjä luotu. Kirjaudu sisään.");
       setName("");
       setEmail("");
       setPassword("");
@@ -62,7 +62,7 @@ const Login = ({ navigation, onLogin }) => {
       setIsLoginMode(true);
     } catch (error) {
       const message =
-        error?.response?.data?.message || "Rekisterointi epaonnistui";
+        error?.response?.data?.message || "Rekisterointi epäonnistui";
       Alert.alert("Virhe", message);
     }
   };
@@ -73,10 +73,10 @@ const Login = ({ navigation, onLogin }) => {
 
       {isLoginMode ? (
         <>
-          <Text style={styles.subtitle}>Kirjaudu sisaan</Text>
+          <Text style={styles.subtitle}>Kirjaudu sisään</Text>
           <TextInput
             style={styles.input}
-            placeholder="Sahkoposti"
+            placeholder="Sähköposti"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
@@ -95,15 +95,15 @@ const Login = ({ navigation, onLogin }) => {
             style={styles.linkButton}
             onPress={() => setIsLoginMode(false)}
           >
-            <Text style={styles.linkText}>Luo uusi kayttaja</Text>
+            <Text style={styles.linkText}>Luo uusi käyttäjä</Text>
           </TouchableOpacity>
         </>
       ) : (
         <>
-          <Text style={styles.subtitle}>Luo uusi kayttaja</Text>
+          <Text style={styles.subtitle}>Luo uusi käyttäjä</Text>
           <TextInput
             style={styles.input}
-            placeholder="Sahkoposti"
+            placeholder="Sähköposti"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
@@ -129,13 +129,13 @@ const Login = ({ navigation, onLogin }) => {
             onChangeText={setConfirmPassword}
           />
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
-            <Text style={styles.buttonText}>Luo kayttaja</Text>
+            <Text style={styles.buttonText}>Luo käyttäjä</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.linkButton}
             onPress={() => setIsLoginMode(true)}
           >
-            <Text style={styles.linkText}>Kirjaudu sisaan</Text>
+            <Text style={styles.linkText}>Kirjaudu sisään</Text>
           </TouchableOpacity>
         </>
       )}
