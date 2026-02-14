@@ -71,7 +71,7 @@ export default function FAQ() {
   const activeItem = tabs.find((item) => item.id === activeTab);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView style={styles.scroll} contentContainerStyle={styles.container}>
       <Text style={styles.title}>FAQ</Text>
       <Text style={styles.subtitle}>Tietoturva- ja tukiopas</Text>
 
@@ -151,9 +151,14 @@ export default function FAQ() {
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flex: 1,
+    backgroundColor: "#0f172a",
+  },
   container: {
     padding: 16,
     backgroundColor: "#0f172a",
+    paddingTop: 32,
   },
   title: {
     fontSize: 24,

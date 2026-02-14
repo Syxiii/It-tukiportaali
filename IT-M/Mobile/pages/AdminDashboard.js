@@ -167,15 +167,18 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" color="#2563eb" />
-        <Text style={styles.mutedText}>Ladataan tiketteja...</Text>
+        <ActivityIndicator size="large" color="#dc2626" />
+        <Text style={styles.mutedText}>Ladataan tikettejä...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ylläpidon hallintapaneeli</Text>
+      <View style={styles.adminHeader}>
+        <Text style={styles.adminTitle}>🔐 Ylläpidon tiketti paneeli</Text>
+        <Text style={styles.adminSubtitle}>Kaikki luodut tiketit löytyvät täältä</Text>
+      </View>
       <FlatList
         data={tickets}
         keyExtractor={(item) => String(item.id)}
@@ -310,9 +313,25 @@ export default function AdminDashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0f172a",
+    backgroundColor: "#1a1a2e",
     paddingHorizontal: 16,
-    paddingTop: 20,
+    paddingTop: 32,
+  },
+  adminHeader: {
+    backgroundColor: "#dc2626",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+  },
+  adminTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#ffffff",
+    marginBottom: 4,
+  },
+  adminSubtitle: {
+    fontSize: 13,
+    color: "#fecaca",
   },
   title: {
     fontSize: 24,

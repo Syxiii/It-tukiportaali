@@ -7,8 +7,15 @@ export default function Welcome({ navigation, currentUser, onLogout }) {
 
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.container}>
-      <Text style={styles.title}>IT-tukipalvelu</Text>
-      <Text style={styles.subtitle}>Tervetuloa {displayName}</Text>
+      <View style={styles.hero}>
+        <Text style={styles.title}>IT-tukipalvelu</Text>
+        <Text style={styles.subtitle}>Tervetuloa {displayName}</Text>
+        <Text style={styles.heroText}>
+          Luo tiketti tai seuraa nykyisten pyyntöjen tilaa.
+        </Text>
+      </View>
+
+      <Text style={styles.sectionTitle}>Pikalinkit</Text>
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Luo uusi tiketti</Text>
@@ -17,7 +24,7 @@ export default function Welcome({ navigation, currentUser, onLogout }) {
         </Text>
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => navigation.navigate("CreateTicket")}
+          onPress={() => navigation.navigate("Create")}
         >
           <Text style={styles.primaryButtonText}>Luo tiketti</Text>
         </TouchableOpacity>
@@ -30,7 +37,7 @@ export default function Welcome({ navigation, currentUser, onLogout }) {
         </Text>
         <TouchableOpacity
           style={styles.secondaryButton}
-          onPress={() => navigation.navigate("MyTickets")}
+          onPress={() => navigation.navigate("Tickets")}
         >
           <Text style={styles.secondaryButtonText}>Avaa omat tiketit</Text>
         </TouchableOpacity>
@@ -50,6 +57,8 @@ export default function Welcome({ navigation, currentUser, onLogout }) {
       </View>
 
       {isAdmin ? (
+        <>
+          <Text style={styles.sectionTitle}>Yllapito</Text>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Ylläpito</Text>
           <Text style={styles.cardText}>
@@ -70,11 +79,8 @@ export default function Welcome({ navigation, currentUser, onLogout }) {
             </TouchableOpacity>
           </View>
         </View>
+        </>
       ) : null}
-
-      <TouchableOpacity style={styles.logoutButton} onPress={onLogout}>
-        <Text style={styles.logoutText}>Kirjaudu ulos</Text>
-      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -87,6 +93,15 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: "#0f172a",
+    paddingTop: 32,
+  },
+  hero: {
+    backgroundColor: "#0b1220",
+    borderRadius: 16,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: "#1e293b",
+    marginBottom: 18,
   },
   title: {
     fontSize: 28,
@@ -99,11 +114,24 @@ const styles = StyleSheet.create({
     color: "#cbd5f5",
     marginBottom: 18,
   },
+  heroText: {
+    fontSize: 13,
+    color: "#94a3b8",
+  },
+  sectionTitle: {
+    color: "#cbd5f5",
+    fontSize: 12,
+    letterSpacing: 1.2,
+    textTransform: "uppercase",
+    marginBottom: 10,
+  },
   card: {
     backgroundColor: "#111827",
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#1f2937",
   },
   cardTitle: {
     fontSize: 18,
@@ -140,14 +168,6 @@ const styles = StyleSheet.create({
   },
   adminRow: {
     flexDirection: "row",
-  },
-  logoutButton: {
-    alignItems: "center",
-    paddingVertical: 12,
-    marginTop: 10,
-  },
-  logoutText: {
-    color: "#f87171",
-    fontWeight: "600",
+    flexWrap: "wrap",
   },
 });

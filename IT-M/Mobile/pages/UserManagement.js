@@ -81,7 +81,10 @@ export default function UserManagement() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Käyttäjien hallinta</Text>
+      <View style={styles.adminHeader}>
+        <Text style={styles.adminTitle}>👥 Käyttäjien Hallinta</Text>
+        <Text style={styles.adminSubtitle}>Hallitse käyttäjätunnuksia ja käyttäjien rooleja</Text>
+      </View>
 
       <TouchableOpacity
         style={styles.toggleButton}
@@ -163,8 +166,25 @@ export default function UserManagement() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0f172a",
+    backgroundColor: "#1a1a2e",
     padding: 16,
+    paddingTop: 32,
+  },
+  adminHeader: {
+    backgroundColor: "#dc2626",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+  },
+  adminTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#ffffff",
+    marginBottom: 4,
+  },
+  adminSubtitle: {
+    fontSize: 13,
+    color: "#fecaca",
   },
   title: {
     fontSize: 22,
