@@ -44,10 +44,10 @@ function UserTabs({ currentUser, onLogout, onLanguageChange, language }) {
           />
         )}
       </Tab.Screen>
-      <Tab.Screen name="Tickets" component={MyTickets} />
-      <Tab.Screen name="Create" component={CreateTicket} />
+      <Tab.Screen name="Tiketit" component={MyTickets} />
+      <Tab.Screen name="Luo tiketti" component={CreateTicket} />
       <Tab.Screen name="FAQ" component={FAQ} />
-      <Tab.Screen name="Settings">
+      <Tab.Screen name="Asetukset">
         {(props) => (
           <Settings
             {...props}
@@ -110,7 +110,7 @@ function AdminTabs({ currentUser, onLogout, onLanguageChange, language }) {
       <Tab.Screen name="Hallintapaneeli" component={AdminDashboard} />
       <Tab.Screen name="Käyttäjät" component={UserManagement} />
       <Tab.Screen name="FAQ" component={FAQ} />
-      <Tab.Screen name="Settings">
+      <Tab.Screen name="Asetukset">
         {(props) => (
           <Settings
             {...props}
