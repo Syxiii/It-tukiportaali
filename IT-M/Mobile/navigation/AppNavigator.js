@@ -91,6 +91,22 @@ function AdminTabs({ currentUser, onLogout, onLanguageChange, language }) {
           />
         )}
       </Tab.Screen>
+        <Tab.Screen
+          name="Tickets"
+          component={MyTickets}
+          options={{
+            tabBarButton: () => null,
+            tabBarItemStyle: { display: "none" },
+          }}
+        />
+        <Tab.Screen
+          name="Create"
+          component={CreateTicket}
+          options={{
+            tabBarButton: () => null,
+            tabBarItemStyle: { display: "none" },
+          }}
+        />
       <Tab.Screen name="Hallintapaneeli" component={AdminDashboard} />
       <Tab.Screen name="Käyttäjät" component={UserManagement} />
       <Tab.Screen name="FAQ" component={FAQ} />

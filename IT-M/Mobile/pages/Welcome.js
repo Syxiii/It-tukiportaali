@@ -67,13 +67,13 @@ export default function Welcome({ navigation, currentUser, onLogout }) {
           <View style={styles.adminRow}>
             <TouchableOpacity
               style={styles.secondaryButton}
-              onPress={() => navigation.navigate("AdminDashboard")}
+              onPress={() => navigation.navigate("Hallintapaneeli")}
             >
               <Text style={styles.secondaryButtonText}>Hallintapaneeli</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.secondaryButton}
-              onPress={() => navigation.navigate("UserManagement")}
+              onPress={() => navigation.navigate("Käyttäjät")}
             >
               <Text style={styles.secondaryButtonText}>Käyttäjät</Text>
             </TouchableOpacity>
