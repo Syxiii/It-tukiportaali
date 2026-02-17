@@ -1,4 +1,13 @@
 import prisma from "../prisma/client.js";
+import admin from "firebase-admin";
+import path from "path";
+import admin from "firebase-admin";
+
+const serviceAccount = require(path.resolve(__dirname, "../firebase-key.json"));
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 /**
  * GET /api/tickets
@@ -78,10 +87,12 @@ export async function updateTicket(req, res) {
       Ratkaistu: "RATKAISTU"
     };
 
-    const ticket = await prisma.ticket.findUnique({ where: { id: parseInt(id) } });
+    const ticket = await prisma.ticket.findUnique({ where: { id: parseInt(id) }, include: { user: true }, });
     if (!ticket) {
       return res.status(404).json({ message: "Tikettiä ei löytynyt" });
     }
+
+    const newStatus = statusMap[status] || ticket.status;
 
     const updatedTicket = await prisma.ticket.update({
       where: { id: parseInt(id) },
@@ -96,11 +107,31 @@ export async function updateTicket(req, res) {
     }
    });
 
+      if (
+      ticket.status !== "RATKAISTU" &&
+      newStatus === "RATKAISTU" &&
+      updatedTicket.user?.fcmToken
+    ) {
+      await sendPushNotification(updatedTicket.user.fcmToken);
+    }
+
     res.status(200).json(updatedTicket);
   } catch (err) {
     console.error("Error updating ticket:", err);
     res.status(500).json({ message: "Palvelinvirhe" });
   }
+}
+
+async function sendPushNotification(fcmToken) {
+  if (!fcmToken) return;
+
+  await admin.messaging().send({
+    token: fcmToken,
+    notification: {
+      title: "Tiketti ratkaistu",
+      body: "Yksi tiketeistäsi on merkitty ratkaistuksi."
+    }
+  });
 }
 
 /**
@@ -124,4 +155,19 @@ export async function deleteTicket(req, res) {
   }
 }
 
-//Ddd
+export async function saveFcmToken(req, res) {
+  try {
+    const userId = req.user.id; // oletetaan että auth middleware
+    const { fcmToken } = req.body;
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { fcmToken }
+    });
+
+    res.status(200).json({ message: "FCM token tallennettu" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Virhe tokenin tallennuksessa" });
+  }
+}

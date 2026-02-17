@@ -7,7 +7,8 @@ import {
   getMyTickets,
   createTicket,
   updateTicket,
-  deleteTicket
+  deleteTicket,
+  saveFcmToken
 } from "../controllers/ticketController.js";
 import { getTicketComment, createTicketComment, updateTicketComment, deleteTicketComment } from "../controllers/commentController.js";
 
@@ -41,5 +42,7 @@ router.put("/:ticketId/updatecomment/:commentid", authenticate, updateTicketComm
 
 // DELETE /api/tickets/:ticketId/deletecomment/:commentid - delete comment
 router.delete("/:ticketId/deletecomment/:commentid", authenticate,requireAdmin, deleteTicketComment);
+
+router.post("/saveFcmToken", authenticate, saveFcmToken)
 
 export default router;
