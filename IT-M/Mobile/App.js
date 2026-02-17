@@ -4,6 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
 import AppNavigator from './navigation/AppNavigator';
 import { setAuthToken } from './pages/api';
+import api from './pages/api';
+import messaging from '@react-native-firebase/messaging';
+
 
 export const LanguageContext = createContext();
 
@@ -51,6 +54,42 @@ export default function App() {
 
     loadUserData();
   }, []);
+
+
+  useEffect(() => {
+    const getFcmToken = async () => {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+      if (enabled) {
+        const fcmToken = await messaging().getToken();
+        console.log("FCM TOKEN:", fcmToken);
+
+        // Lähetä tämä backendille
+      }
+    };
+
+    getFcmToken();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onTokenRefresh(async (fcmToken) => {
+      if (token) {
+        await api.post(
+          "/tickets/saveFcmToken",
+          { fcmToken },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+      }
+    });
+
+    return unsubscribe;
+  }, [token]);
+
 
   useEffect(() => {
     const initializeNotifications = async () => {
@@ -205,10 +244,27 @@ export default function App() {
     try {
       await AsyncStorage.setItem("token", newToken);
       await AsyncStorage.setItem("user", JSON.stringify(user));
+
       await clearPendingLogout();
+
       setAuthToken(newToken);
       setToken(newToken);
       setCurrentUser(user);
+
+    const fcmToken = await messaging().getToken();
+
+    if (fcmToken) {
+      await api.post("/tickets/saveFcmToken", // backend endpoint
+        { fcmToken },            // body
+        {
+          headers: {
+            Authorization: `Bearer ${newToken}`, // token header
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
     } catch (error) {
       console.error("Virhe käyttäjän tietojen tallennuksessa:", error);
     }
