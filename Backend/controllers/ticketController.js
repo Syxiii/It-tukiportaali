@@ -1,7 +1,6 @@
 import prisma from "../prisma/client.js";
 import admin from "firebase-admin";
 import path from "path";
-import admin from "firebase-admin";
 
 const serviceAccount = require(path.resolve(__dirname, "../firebase-key.json"));
 
