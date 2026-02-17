@@ -133,6 +133,12 @@ export async function updateTicket(req, res) {
 }
 
 async function sendPushNotification(fcmToken) {
+
+    if (!isProduction) {
+    console.log("[DEV] Would send push notification:", { fcmToken, title, body });
+    return;
+  }
+  
   if (!fcmToken) return;
 
   await admin.messaging().send({
