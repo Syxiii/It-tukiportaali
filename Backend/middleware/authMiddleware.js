@@ -1,6 +1,8 @@
 import prisma from "../prisma/client.js";
 import jwt from "jsonwebtoken";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 /**
  * Authentication middleware
  * - Checks Authorization header
@@ -19,12 +21,21 @@ export async function authenticate(req, res, next) {
     }
     // Verify token
     let decoded;
+
+    if (isProduction && !process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET missing in production");
+    }
+
     try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET || "dev-secret");
+      if (isProduction){
+        decoded = jwt.verify(token, process.env.JWT_SECRET);
+      }else{
+        decoded = jwt.verify(token, "dev-secret");
+      }
     } catch (err) {
       return res.status(401).json({ message: "Virheellinen token" });
     }
-    // TEMP: attach a real user from DB
+  
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId }
     });
